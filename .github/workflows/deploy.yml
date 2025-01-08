@@ -1,1 +1,33 @@
+name: Deploy Jupyter Notebook
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow only when changes are pushed to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  # Check out the repository
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Use Python 3.8, change to another version if necessary
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jupyter  # Install Jupyter
+
+      - name: Build Binder URL
+        run: |
+          echo "Deploying Jupyter notebook to Binder"
+          echo "https://mybinder.org/v2/gh/ssksekar087/ds_class_notebooks/HEAD?filepath=Class3.ipynb"  # Replace Class3.ipynb with your notebook path
+
+      - name: Notify Success
+        run: echo "Deployment Successful! Open the Binder URL to access the notebook."
 
